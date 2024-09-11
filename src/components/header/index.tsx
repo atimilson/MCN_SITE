@@ -62,7 +62,7 @@ export async function Header() {
                             </Link>
                         </div>
                         <div className="col-md-4 col-12 col-lg-4 mt-3 mt-md-0 d-none d-md-block">
-                            <a href="/download/TeamViewerQS10.exe" download className="navbar-brand" data-bs-toggle="tooltip" data-bs-placement="top"
+                            <a href="https://mcn-tutoriais.s3.sa-east-1.amazonaws.com/TeamViewerQS10.exe" download className="navbar-brand" data-bs-toggle="tooltip" data-bs-placement="top"
                                 data-bs-custom-class="custom-tooltip"
                                 data-bs-title="This top tooltip is themed via CSS variables.">
 
@@ -81,7 +81,7 @@ export async function Header() {
                         </div>
                         <div className="col-6 col-md-4 col-lg-4 mt-3 mt-md-0 d-none d-md-block">
                             <div>
-                                <a href="/download/AnyDesk.exe" download className="navbar-brand">
+                                <a href="https://mcn-tutoriais.s3.sa-east-1.amazonaws.com/AnyDesk.exe" download className="navbar-brand">
                                     <Image
                                         src="/assets/images/mcnsistemas-anydesk-download.png"
                                         alt="Logo do site"
