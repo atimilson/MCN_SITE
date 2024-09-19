@@ -18,7 +18,7 @@ const ElfsightInstagramFeed = () => {
 
     return (
         <div>
-            <div className="elfsight-app-c7aacdf8-117e-45c0-90ef-681f7f544741" data-elfsight-app-lazy></div>
+            <div className="elfsight-app-9728513b-4bba-4e36-a73c-33d3d8b5bbe7" data-elfsight-app-lazy></div>
         </div>
     );
 };
