@@ -146,6 +146,23 @@ export async function getAppBySlug(slug: string) {
 
 }
 
+export async function getDataRevenda() {
+    try {
+
+        const res = await fetch(`https://api.cosmicjs.com/v3/buckets/mcnsite-production/objects?pretty=true&query=%7B%22type%22:%22revendas%22%7D&limit=10&read_key=RQYJBfjrBtotUoOhPH2FisVx8ilFUQwAnNAEEjzGBcyVHjGidv&depth=1&props=slug,title,metadata`, { next: { revalidate: 60 } })
+
+        if (!res.ok) {
+            throw new Error("Failed to fetch data")
+        }
+
+        return res.json()
+
+    } catch (error) {
+        throw new Error("Failed to fetch data")
+    }
+
+}
+
 
 
 
