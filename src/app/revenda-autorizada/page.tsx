@@ -14,7 +14,16 @@ export default async function revendaAutorizada() {
             />
             <section className="p-md-5 p-3 container">
                 <h1 className="section-title mb-5">Revenda Autorizada</h1>
-                <Revenda objects={data.objects} />
+
+                {data.objects.length > 0 ? (
+                    <Revenda objects={data.objects} />
+                ) : (
+                    <div className="text-center p-5">
+                        <p className="text-muted fs-5">
+                            No momento, não há empresas parceiras registradas. Por favor, volte mais tarde para conferir as atualizações.
+                        </p>
+                    </div>
+                )}
             </section>
         </>
     );
