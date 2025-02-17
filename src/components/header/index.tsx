@@ -1,4 +1,3 @@
-
 import { ProductProps } from "@/utils/product.type";
 import { AppProps } from "@/utils/aplicativo.type";
 import Link from 'next/link'
@@ -28,12 +27,26 @@ export async function Header() {
                 <div className="top">
                     <div className="container p-2 p-md-3 mx-auto text-white d-flex justify-content-between align-items-center">
                         <Link href="mailto:glaucia@mcnsistemas.com.br" className='text-decoration-none'>
-                            <div className="d-none d-xl-block text-sm  text-decoration-none text-white">
+                            <div className="d-none d-xl-block text-sm text-decoration-none text-white">
                                 <Mail className="me-2" />
                                 glaucia@mcnsistemas.com.br
                             </div>
                         </Link>
-                        <div className="ms-md-auto me-md-0 mx-auto">
+                        <div className="d-flex align-items-center justify-content-center flex-grow-1">
+                            <Link href="/video" className="d-flex align-items-center p-2" style={{ backgroundColor: '#21305c', borderRadius: '5px' }}>
+                                <Image
+                                    src="/assets/images/youtube-logo.png"  
+                                    alt="Logo do YouTube"
+                                    quality={100}
+                                    priority={true}
+                                    width={50}
+                                    height={50}
+                                    className="img-fluid me-2"
+                                />
+                                <span className="text-white fw-bold">Acesse novos vídeos</span>
+                            </Link>
+                        </div>
+                        <div className="ms-md-auto me-md-0">
                             Siga-nos:
                             <Link
                                 href="https://www.instagram.com/mcnsistemas/"
@@ -48,7 +61,7 @@ export async function Header() {
                 <div className="container p-md-3 p-3">
                     <div className="row d-flex justify-content-center align-items-center text-center">
                         <div className="col-md-4 col-12 col-lg-4 mt-2 mt-md-0 text-center text-md-start">
-                            {" "}
+                            
                             <Link href="/" className="navbar-brand">
                                 <Image
                                     src="/assets/images/mcnsistemas-logo.png"

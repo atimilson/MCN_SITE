@@ -165,5 +165,21 @@ export async function getDataRevenda() {
 
 
 
+export async function getDatavideo() {
 
 
+try {
+
+    const res = await fetch(`https://api.cosmicjs.com/v3/buckets/mcnsite-production/objects?pretty=true&query=%7B%22type%22:%22youtubes%22%7D&limit=10&skip=0&read_key=RQYJBfjrBtotUoOhPH2FisVx8ilFUQwAnNAEEjzGBcyVHjGidv&depth=1&props=slug,title,metadata,type,`, { next: { revalidate: 60 } })
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch data")
+    }
+
+    return res.json()
+
+} catch (error) {
+    throw new Error("Failed to fetch data")
+}
+
+}
