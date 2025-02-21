@@ -1,13 +1,21 @@
 export interface videoProps {
-    objects: videoObject[];
+    objects: CategoryObject[];
+    total: number;
 }
 
-interface videoObject {
+interface CategoryObject {
     slug: string;
     title: string;
+    type: string;
     metadata: {
-        video: string;
+        category_name: string;
+        links: VideoLink[];
     }
+}
+
+interface VideoLink {
+    link_title: string;
+    url: string;
 }
 
 

@@ -183,3 +183,23 @@ try {
 }
 
 }
+
+export async function getDataCategoriasvideo() {
+
+
+    try {
+    
+        const res = await fetch(
+            `https://api.cosmicjs.com/v3/buckets/mcnsite-production/objects?pretty=true&query=%7B%22type%22:%22categoriavideos%22%7D&limit=10&skip=0&read_key=RQYJBfjrBtotUoOhPH2FisVx8ilFUQwAnNAEEjzGBcyVHjGidv&depth=1&props=slug,title,metadata,type,`)
+    
+        if (!res.ok) {
+            throw new Error("Failed to fetch data")
+        }
+    
+        return res.json()
+    
+    } catch (error) {
+        throw new Error("Failed to fetch data")
+    }
+    
+    }
