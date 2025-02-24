@@ -1,26 +1,81 @@
 "use client"
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Instagram } from 'lucide-react';
+import Link from 'next/link';
 
-const ElfsightInstagramFeed = () => {
-    useEffect(() => {
-        // Adiciona o script do Elfsight ao carregar o componente
-        const script = document.createElement('script');
-        script.src = "https://static.elfsight.com/platform/platform.js";
-        script.setAttribute('data-use-service-core', 'true');
-        script.defer = true;
-        document.body.appendChild(script);
-
-        // Limpeza ao desmontar o componente
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
-
+const InstagramFeed = () => {
     return (
-        <div>
-            <div className="elfsight-app-9728513b-4bba-4e36-a73c-33d3d8b5bbe7" data-elfsight-app-lazy></div>
+        <div className="instagram-container">
+            <div className="text-center mb-4">
+                <Link 
+                    href="https://www.instagram.com/mcnsistemas/" 
+                    target="_blank" 
+                    className="text-decoration-none text-dark"
+                >
+                    <h3 className="d-flex align-items-center justify-content-center gap-2">
+                        <Instagram size={24} />
+                        @mcnsistemas
+                    </h3>
+                </Link>
+            </div>
+
+            <div className="instagram-feed">
+                <script
+                    async
+                    src="https://www.instagram.com/embed.js"
+                ></script>
+                <blockquote
+                    className="instagram-media"
+                    data-instgrm-permalink="https://www.instagram.com/mcnsistemas/"
+                    data-instgrm-version="14"
+                    style={{
+                        background: '#FFF',
+                        border: 0,
+                        borderRadius: '3px',
+                        boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
+                        margin: '1px',
+                        maxWidth: '540px',
+                        minWidth: '326px',
+                        padding: 0,
+                        width: 'calc(100% - 2px)'
+                    }}
+                >
+                </blockquote>
+            </div>
+
+            <div className="text-center mt-4">
+                <Link 
+                    href="https://www.instagram.com/mcnsistemas/" 
+                    target="_blank" 
+                    className="btn btn-outline-dark"
+                >
+                    <Instagram className="me-2" />
+                    Siga-nos no Instagram
+                </Link>
+            </div>
+
+            <style jsx>{`
+                .instagram-container {
+                    width: 100%;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                .instagram-feed {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 20px;
+                }
+                @media (max-width: 768px) {
+                    .instagram-feed {
+                        padding: 0;
+                    }
+                }
+            `}</style>
         </div>
     );
 };
 
-export default ElfsightInstagramFeed;
+export default InstagramFeed;

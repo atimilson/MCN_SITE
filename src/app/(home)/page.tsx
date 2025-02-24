@@ -1,4 +1,3 @@
-
 import {
   PhoneCall,
   BrickWall,
@@ -10,7 +9,7 @@ import { Carousel } from "@/components/carousel";
 import { Testimonials } from "@/components/testimonials";
 import { getDataHome } from "@/utils/actions/get-data";
 import { HomeProps } from "@/utils/home.type";
-import ElfsightInstagramFeed from "@/components/instagram";
+import InstagramFeed from "@/components/instagram";
 import Link from "next/link";
 
 
@@ -82,19 +81,8 @@ export default async function Home() {
       </section>
       <section className="p-md-5 p-3 bg-light">
         <h2 className="section-title" data-aos="fade-up">INSTAGRAM</h2>
-        <Link href="https://www.instagram.com/mcnsistemas/" target="_blank" className="text-decoration-none text-dark fw-bold">
-          <p className="text-center mb-5 fw-bold">@mcnsistemas</p>
-        </Link>
-        <div className="container ">
-
-          <ElfsightInstagramFeed />
-          <div className="text-center">
-            <Link href="https://www.instagram.com/mcnsistemas/" target="_blank" className="btn btn-outline-dark">
-              <Instagram className="me-2" />
-              Siga-nos no Instagram
-            </Link>
-          </div>
-
+        <div className="container">
+          <InstagramFeed />
         </div>
       </section>
 
