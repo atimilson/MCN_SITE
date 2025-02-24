@@ -1,9 +1,16 @@
 "use client"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Instagram } from 'lucide-react';
 import Link from 'next/link';
+import Script from 'next/script';
 
 const InstagramFeed = () => {
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
     return (
         <div className="instagram-container">
             <div className="text-center mb-4">
@@ -19,29 +26,32 @@ const InstagramFeed = () => {
                 </Link>
             </div>
 
-            <div className="instagram-feed">
-                <script
-                    async
-                    src="https://www.instagram.com/embed.js"
-                ></script>
-                <blockquote
-                    className="instagram-media"
-                    data-instgrm-permalink="https://www.instagram.com/mcnsistemas/"
-                    data-instgrm-version="14"
-                    style={{
-                        background: '#FFF',
-                        border: 0,
-                        borderRadius: '3px',
-                        boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
-                        margin: '1px',
-                        maxWidth: '800px',
-                        minWidth: '600px',
-                        padding: 0,
-                        width: 'calc(100% - 2px)'
-                    }}
-                >
-                </blockquote>
-            </div>
+            {isClient && (
+                <>
+                    <Script
+                        src="https://www.instagram.com/embed.js"
+                        strategy="lazyOnload"
+                    />
+                    <div className="instagram-feed">
+                        <blockquote
+                            className="instagram-media"
+                            data-instgrm-permalink="https://www.instagram.com/mcnsistemas/"
+                            data-instgrm-version="14"
+                            style={{
+                                background: '#FFF',
+                                border: 0,
+                                borderRadius: '3px',
+                                boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
+                                margin: '1px',
+                                maxWidth: '800px',
+                                minWidth: '600px',
+                                padding: 0,
+                                width: 'calc(100% - 2px)'
+                            }}
+                        />
+                    </div>
+                </>
+            )}
 
             <div className="text-center mt-4">
                 <Link 
@@ -71,6 +81,9 @@ const InstagramFeed = () => {
                 @media (max-width: 768px) {
                     .instagram-feed {
                         padding: 0;
+                    }
+                    .instagram-media {
+                        min-width: 100% !important;
                     }
                 }
             `}</style>
