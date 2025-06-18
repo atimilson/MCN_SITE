@@ -35,7 +35,7 @@ export function Carousel({ object }: HomeProps) {
             >
                 {object.metadata.slider?.map((banner) => (
                     <SwiperSlide key={banner.text}>
-                        <Image src={banner.image.url} alt={banner.text} width={1920} height={600} className='img-fluid' />
+                        <Image src={banner.image.url} alt={banner.text} width={2715} height={600} className='img-fluid' />
                     </SwiperSlide>
                 ))}
 
