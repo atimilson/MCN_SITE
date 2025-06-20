@@ -7,9 +7,9 @@ import Script from 'next/script';
 const InstagramFeed = () => {
     const [isClient, setIsClient] = useState(false);
 
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
+        useEffect(() => {
+            setIsClient(true);
+        }, []);
 
     return (
         <div className="instagram-container">

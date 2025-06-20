@@ -1,0 +1,121 @@
+.whatsappFloat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  animation: pulseWave 2s infinite, highlight 4s infinite;
+}
+
+/* Ondas de destaque ao redor do botão */
+.whatsappFloat::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(37, 211, 102, 0.4);
+  animation: ripple 2s infinite;
+  z-index: -1;
+}
+
+.whatsappFloat::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(37, 211, 102, 0.3);
+  animation: ripple 2s infinite 0.5s;
+  z-index: -2;
+}
+
+/* Animação de pulsação suave do botão principal */
+@keyframes pulseWave {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Animação das ondas ao redor */
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Animação de destaque com brilho a cada 4 segundos */
+@keyframes highlight {
+  0% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  25% {
+    box-shadow: 0 0 0 8px rgba(37, 211, 102, 0.3), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 16px rgba(37, 211, 102, 0.1), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  75% {
+    box-shadow: 0 0 0 8px rgba(37, 211, 102, 0.3), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Estados de interação */
+.whatsappFloat:hover {
+  background-color: #128C7E;
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+  animation-play-state: paused;
+}
+
+.whatsappFloat:hover::before,
+.whatsappFloat:hover::after {
+  animation-play-state: paused;
+}
+
+.whatsappFloat:active {
+  transform: scale(0.95);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  .whatsappFloat {
+    width: 55px;
+    height: 55px;
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .whatsappFloat::before,
+  .whatsappFloat::after {
+    width: 100%;
+    height: 100%;
+  }
+} 

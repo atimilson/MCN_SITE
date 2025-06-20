@@ -5,6 +5,7 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { WhatsAppFloat } from "@/components/whatsapp-float";
 import InstallBootstrap from "@/components/InstallBootstrap";
 import dynamic from "next/dynamic";
 
@@ -48,6 +49,7 @@ export default function RootLayout({
         <PixelTracker />
         {children}
         <Footer />
+        <WhatsAppFloat />
       </body>
     </html>
   );
