@@ -13,8 +13,8 @@ export function WhatsAppFloat() {
   };
 
   return (
-    <div className={styles.whatsappFloat} onClick={handleWhatsAppClick}>
-      <button style={{backgroundColor: '#25D366', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    <div className={styles.whatsappFloat} >
+      <button type="button" role="button" onClick={handleWhatsAppClick} style={{backgroundColor: '#25D366', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <FaWhatsapp size={44} color="white" />
       </button>
     </div>
