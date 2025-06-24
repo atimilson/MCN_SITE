@@ -34,12 +34,12 @@ export default async function Home() {
 
         />
       </section>
-      <section className="p-md-5 p-3 bg-light">
+      {/* <section className="p-md-5 p-3 bg-light">
         <h2 className="section-title" data-aos="fade-up">INSTAGRAM</h2>
         <div className="container">
           <InstagramFeed />
         </div>
-      </section>
+      </section> */}
 
 
       <section className="p-md-5 p-3">
