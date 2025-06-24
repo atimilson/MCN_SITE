@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -28,7 +27,6 @@ export default function RootLayout({
         <script
             dangerouslySetInnerHTML={{
               __html: `
-              <script>
                 !function(f,b,e,v,n,t,s)
                 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
                 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -39,7 +37,6 @@ export default function RootLayout({
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '1731742927464023');
                 fbq('track', 'PageView');
-              </script>
               `,
             }}
           />
