@@ -17,6 +17,8 @@ export default async function Home() {
 
   const { object }: HomeProps = await getDataHome();
 
+ 
+
   return (
     <main>
       <Carousel

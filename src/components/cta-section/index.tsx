@@ -22,6 +22,11 @@ const CTASection = () => {
         }
     }, []);
 
+    const handleWhatsAppClick = () => {
+        const url = `https://wa.me/5565992011454?text=${encodeURIComponent("Olá! Gostaria de mais informações sobre os sistemas MCN.")}`;
+        window.open(url, '_blank');
+      };
+
     return (
         <div className="background-blue position-relative py-5">
             <div className="container">
@@ -63,7 +68,7 @@ const CTASection = () => {
                     <div className="col-md-4 col-12">
                         <div className="cta-button text-center" ref={buttonRef}>
                             <a 
-                                href="#" 
+                                onClick={handleWhatsAppClick}
                                 className="btn btn-light btn-lg px-4 py-3 shadow-sm fw-bold"
                             >
                                 SOLICITE UM ORÇAMENTO
