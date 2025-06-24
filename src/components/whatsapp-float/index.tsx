@@ -14,7 +14,9 @@ export function WhatsAppFloat() {
 
   return (
     <div className={styles.whatsappFloat} onClick={handleWhatsAppClick}>
-      <FaWhatsapp size={44} color="white" />
+      <button style={{backgroundColor: '#25D366', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <FaWhatsapp size={44} color="white" />
+      </button>
     </div>
   );
 } 
