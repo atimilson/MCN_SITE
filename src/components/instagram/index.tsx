@@ -2,28 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { Instagram } from 'lucide-react';
 import Link from 'next/link';
+import Script from 'next/script';
 
 const InstagramFeed = () => {
     const [isClient, setIsClient] = useState(false);
 
-    useEffect(() => {
-        setIsClient(true);
-        
-        // Carrega o script do Instagram de forma mais segura
-        if (typeof window !== 'undefined' && !window.instgrm) {
-            const script = document.createElement('script');
-            script.src = 'https://www.instagram.com/embed.js';
-            script.async = true;
-            script.onload = () => {
-                if (window.instgrm) {
-                    window.instgrm.Embeds.process();
-                }
-            };
-            document.body.appendChild(script);
-        } else if (window.instgrm) {
-            window.instgrm.Embeds.process();
-        }
-    }, []);
+        useEffect(() => {
+            setIsClient(true);
+        }, []);
 
     return (
         <div className="instagram-container">
@@ -41,42 +27,30 @@ const InstagramFeed = () => {
             </div>
 
             {isClient && (
-                <div className="instagram-feed">
-                    <blockquote
-                        className="instagram-media"
-                        data-instgrm-captioned
-                        data-instgrm-permalink="https://www.instagram.com/mcnsistemas/reel/DLIstuRPPJC/"
-                        data-instgrm-version="14"
-                        style={{
-                            background: '#FFF',
-                            border: 0,
-                            borderRadius: '3px',
-                            boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
-                            margin: '1px auto',
-                            maxWidth: '540px',
-                            minWidth: '326px',
-                            padding: 0,
-                            width: 'calc(100% - 2px)'
-                        }}
-                    >
-                        <div style={{ padding: '16px' }}>
-                            <Link 
-                                href="https://www.instagram.com/mcnsistemas/" 
-                                target="_blank"
-                                style={{ 
-                                    background: '#FFFFFF', 
-                                    lineHeight: 0, 
-                                    padding: '0 0', 
-                                    textAlign: 'center', 
-                                    textDecoration: 'none', 
-                                    width: '100%' 
-                                }}
-                            >
-                                Ver no Instagram
-                            </Link>
-                        </div>
-                    </blockquote>
-                </div>
+                <>
+                    <Script
+                        src="https://www.instagram.com/embed.js"
+                        strategy="lazyOnload"
+                    />
+                    <div className="instagram-feed">
+                        <blockquote
+                            className="instagram-media"
+                            data-instgrm-permalink="https://www.instagram.com/mcnsistemas/"
+                            data-instgrm-version="14"
+                            style={{
+                                background: '#FFF',
+                                border: 0,
+                                borderRadius: '3px',
+                                boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
+                                margin: '1px',
+                                maxWidth: '800px',
+                                minWidth: '600px',
+                                padding: 0,
+                                width: 'calc(100% - 2px)'
+                            }}
+                        />
+                    </div>
+                </>
             )}
 
             <div className="text-center mt-4">
@@ -116,16 +90,5 @@ const InstagramFeed = () => {
         </div>
     );
 };
-
-// Declaração de tipo para o Instagram embed
-declare global {
-    interface Window {
-        instgrm?: {
-            Embeds: {
-                process: () => void;
-            };
-        };
-    }
-}
 
 export default InstagramFeed;

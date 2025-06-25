@@ -9,9 +9,10 @@ import { Carousel } from "@/components/carousel";
 import { Testimonials } from "@/components/testimonials";
 import { getDataHome } from "@/utils/actions/get-data";
 import { HomeProps } from "@/utils/home.type";
-import InstagramFeed from "@/components/instagram";
+// import InstagramFeed from "@/components/instagram";
 import CTASection from "@/components/cta-section";
 import SegmentsSection from "@/components/segments-section";
+import SimpleInstagramFeed from "@/components/instagram/simple";
 
 export default async function Home() {
 
@@ -34,12 +35,12 @@ export default async function Home() {
 
         />
       </section>
-      {/* <section className="p-md-5 p-3 bg-light">
+      <section className="p-md-5 p-3 bg-light">
         <h2 className="section-title" data-aos="fade-up">INSTAGRAM</h2>
         <div className="container">
-          <InstagramFeed />
+          <SimpleInstagramFeed />
         </div>
-      </section> */}
+      </section>
 
 
       <section className="p-md-5 p-3">
