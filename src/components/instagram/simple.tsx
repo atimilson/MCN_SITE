@@ -76,6 +76,7 @@ const SimpleInstagramFeed = () => {
                                 height={300}
                                 className="instagram-image"
                                 style={{width: '100%', height: '100%', objectFit: 'contain'}}
+                                unoptimized={true}
                             />
                             <div className="instagram-overlay">
                                 <Instagram size={30} color="white" />
