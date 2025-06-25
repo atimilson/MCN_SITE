@@ -15,7 +15,7 @@ const SimpleInstagramFeed = () => {
         },
         {
             id: 2,
-            imageUrl: "/assets/images/i2a.jpg", // Substitua pela imagem real
+            imageUrl: "/assets/images/i7.jpg", // Substitua pela imagem real
             postUrl: "https://www.instagram.com/mcnsistemas/",
             caption: "Com o aplicativo de contagem da MCN, você faz tudo direto pelo celular, com rapidez, precisão e integração automática."
         },
