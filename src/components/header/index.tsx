@@ -55,7 +55,7 @@ export async function Header() {
                             >
                                 <FaWhatsapp size={24} className="whatsapp-icon" />
                                 <div className="d-flex flex-column">
-                                    <span className="whatsapp-text fw-bold">Fale conosco</span>
+                                    <span className="whatsapp-text fw-bold">Fone Vendas</span>
                                     <span className="whatsapp-number">(65) 99269-5937</span>
                                 </div>
                             </Link>
