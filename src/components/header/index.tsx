@@ -11,6 +11,7 @@ import {
 import { Product } from "../product";
 import { Aplicativo } from "../aplicativo";
 import { getDataApp, getDataProduct } from "@/utils/actions/get-data";
+import { FaWhatsapp } from "react-icons/fa";
 
 export async function Header() {
 
@@ -44,6 +45,19 @@ export async function Header() {
                                     className="img-fluid me-2"
                                 />
                                 <span className="text-white fw-bold">Acesse novos vídeos</span>
+                            </Link>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center flex-grow-1">
+                            <Link 
+                                href="https://wa.me/556592695937?text=Olá! Gostaria de mais informações sobre os sistemas MCN." 
+                                target="_blank" 
+                                className="whatsapp-button d-flex align-items-center gap-2 px-3 py-2"
+                            >
+                                <FaWhatsapp size={24} className="whatsapp-icon" />
+                                <div className="d-flex flex-column">
+                                    <span className="whatsapp-text fw-bold">Fale conosco</span>
+                                    <span className="whatsapp-number">(65) 99269-5937</span>
+                                </div>
                             </Link>
                         </div>
                         <div className="ms-md-auto me-md-0">

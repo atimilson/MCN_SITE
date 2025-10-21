@@ -10,7 +10,7 @@ declare global {
 }
 
 export function WhatsAppFloat() {
-  const phoneNumber = "+5565992011454";
+  const phoneNumber = "+556592695937";
   const message = "Olá! Gostaria de mais informações sobre os sistemas MCN.";
   
   const handleWhatsAppClick = () => {
