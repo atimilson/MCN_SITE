@@ -23,7 +23,7 @@ const CTASection = () => {
     }, []);
 
     const handleWhatsAppClick = () => {
-        const url = `https://wa.me/5565992011454?text=${encodeURIComponent("Olá! Gostaria de mais informações sobre os sistemas MCN.")}`;
+        const url = `https://wa.me/556592695937?text=${encodeURIComponent("Olá! Gostaria de mais informações sobre os sistemas MCN.")}`;
         window.open(url, '_blank');
       };
 
