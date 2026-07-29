@@ -1,125 +1,173 @@
-'use client'
-import React from 'react';
-import { BrickWall, Truck, Car } from "lucide-react";
+"use client";
 
-const SegmentsSection = () => {
-    return (
-        <section className="segments-section py-5">
-            <div className="container">
-                <div className="text-center mb-5">
-                    <h2 className="section-title position-relative d-inline-block">
-                        SEGMENTOS ATENDIDOS
-                        <div className="title-underline"></div>
-                    </h2>
-                    <p className="text-muted mt-3">
-                        Soluções especializadas para diferentes setores do mercado
-                    </p>
+import {
+  BrickWall,
+  Truck,
+  Car,
+  Paintbrush,
+  Wrench,
+  Store,
+  Check,
+  ArrowRight,
+} from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import styles from "./styles.module.css";
+
+const segments = [
+  {
+    id: "construcao",
+    icon: BrickWall,
+    title: "Materiais para Construção",
+    tagline: "Venda e gestão no ritmo da obra",
+    description:
+      "Funcionalidades específicas para lojas de materiais: venda ágil no balcão, controle de estoque e processos pensados para o dia a dia do segmento.",
+    features: [
+      "PDV rápido e intuitivo",
+      "Controle de estoque e compras",
+      "Gestão fiscal integrada",
+      "Relatórios gerenciais",
+    ],
+    image: "/assets/images/construcao.gif",
+    accent: "blue",
+    delay: 100,
+  },
+  {
+    id: "distribuidora",
+    icon: Truck,
+    title: "Distribuidora",
+    tagline: "Atacado com fluxo seguro",
+    description:
+      "Fluxo seguro e ágil para atacado: vendas simplificadas, expedição organizada e entrega rápida com rastreabilidade do pedido.",
+    features: [
+      "Pedido e expedição ágeis",
+      "Múltiplos canais de venda",
+      "Controle de lotes e rotas",
+      "Integração com logística",
+    ],
+    image: "/assets/images/distribuidora.gif",
+    accent: "navy",
+    delay: 200,
+  },
+  {
+    id: "autopecas",
+    icon: Car,
+    title: "Auto Peças",
+    tagline: "Ritmo intenso, sistema na medida",
+    description:
+      "Sistema centralizado para o ritmo do comércio de auto peças: busca rápida de itens, multi-estoques e funções específicas do setor.",
+    features: [
+      "Busca rápida de peças",
+      "Catálogo e equivalências",
+      "Estoque multi-loja",
+      "Venda no balcão e delivery",
+    ],
+    image: "/assets/images/edson-auto-pecas.jpg",
+    accent: "cyan",
+    delay: 300,
+  },
+];
+
+const moreSegments = [
+  { icon: Wrench, label: "Ferragens" },
+  { icon: Paintbrush, label: "Lojas de tintas" },
+  { icon: Store, label: "Acabamentos" },
+];
+
+function whatsappHref(segmentTitle: string) {
+  const text = `Olá! Gostaria de conhecer o sistema MCN para o segmento de ${segmentTitle}.`;
+  return `https://wa.me/556592695937?text=${encodeURIComponent(text)}`;
+}
+
+export default function SegmentsSection() {
+  return (
+    <section className={styles.section} id="segmentos">
+      <div className="container">
+        <div className={styles.header}>
+          <span className={styles.eyebrow}>Para o seu negócio</span>
+          <h2 className={styles.title}>Segmentos atendidos</h2>
+          <div className={styles.underline} />
+          <p className={styles.lead}>
+            ERP especializado nos setores em que a operação exige agilidade,
+            controle fiscal e processos sob medida.
+          </p>
+        </div>
+
+        <div className={styles.grid}>
+          {segments.map((item) => {
+            const Icon = item.icon;
+            return (
+              <article
+                key={item.id}
+                className={`${styles.card} ${styles[`accent_${item.accent}`]}`}
+                data-aos="fade-up"
+                data-aos-delay={item.delay}
+              >
+                <div className={styles.media}>
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className={styles.mediaImage}
+                    sizes="(max-width: 991px) 100vw, 33vw"
+                    unoptimized={item.image.endsWith(".gif")}
+                  />
+                  <div className={styles.mediaOverlay} />
+                  <div className={styles.iconBadge}>
+                    <Icon size={26} strokeWidth={1.75} aria-hidden />
+                  </div>
                 </div>
 
-                <div className="row g-4 justify-content-center">
-                    <div className="col-md-4 col-lg-4">
-                        <div className="segment-card h-100" data-aos="fade-up" data-aos-delay="150">
-                            <div className="card-icon mb-4">
-                                <BrickWall size={40} className="text-primary" />
-                            </div>
-                            <h3 className="segment-title">Materiais para Construção</h3>
-                            <p className="segment-description">
-                                O segmento de materiais para construção necessita de particularidades específicas em seus sistemas. 
-                                A MCN traz funcionalidades de fácil manuseio que agilizam o processo de venda e gerenciamento da empresa.
-                            </p>
-                        </div>
-                    </div>
+                <div className={styles.body}>
+                  <p className={styles.tagline}>{item.tagline}</p>
+                  <h3 className={styles.cardTitle}>{item.title}</h3>
+                  <p className={styles.cardText}>{item.description}</p>
 
-                    <div className="col-md-4 col-lg-4">
-                        <div className="segment-card h-100" data-aos="fade-up" data-aos-delay="250">
-                            <div className="card-icon mb-4">
-                                <Truck size={40} className="text-primary" />
-                            </div>
-                            <h3 className="segment-title">Distribuidora</h3>
-                            <p className="segment-description">
-                                A Venda por atacado ou distribuidora necessita de um Fluxo seguro e ágil nas vendas. 
-                                A MCN Sistemas tem o ERP ideal para esse segmento pois conta com um sistema de venda 
-                                extremamente fácil, facilitando a entrega rápida pelo setor de expedição.
-                            </p>
-                        </div>
-                    </div>
+                  <ul className={styles.features}>
+                    {item.features.map((feature) => (
+                      <li key={feature}>
+                        <span className={styles.check} aria-hidden>
+                          <Check size={14} strokeWidth={2.5} />
+                        </span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
 
-                    <div className="col-md-4 col-lg-4">
-                        <div className="segment-card h-100" data-aos="fade-up" data-aos-delay="400">
-                            <div className="card-icon mb-4">
-                                <Car size={40} className="text-primary" />
-                            </div>
-                            <h3 className="segment-title">Auto Peças</h3>
-                            <p className="segment-description">
-                                A venda e distribuição de auto peças é um setor em constante movimentação e ter um sistema 
-                                ágil e centralizado, além de conter funções específicas para o segmento, são extremamente necessários.
-                            </p>
-                        </div>
-                    </div>
+                  <Link
+                    href={whatsappHref(item.title)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.cta}
+                  >
+                    Quero para meu negócio
+                    <ArrowRight size={16} aria-hidden />
+                  </Link>
                 </div>
-            </div>
+              </article>
+            );
+          })}
+        </div>
 
-            <style jsx>{`
-                .segments-section {
-                    background: #f8f9fa;
-                }
-                .section-title {
-                    font-size: 2.5rem;
-                    font-weight: 700;
-                    color: #21305c;
-                    text-transform: uppercase;
-                    margin-bottom: 1rem;
-                }
-                .title-underline {
-                    height: 4px;
-                    width: 60px;
-                    background: #21305c;
-                    margin: 0.5rem auto 0;
-                }
-                .segment-card {
-                    background: white;
-                    padding: 2rem;
-                    border-radius: 10px;
-                    box-shadow: 0 0 20px rgba(0,0,0,0.05);
-                    transition: all 0.3s ease;
-                    text-align: center;
-                }
-                .segment-card:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-                }
-                .card-icon {
-                    background: rgba(33, 48, 92, 0.1);
-                    width: 80px;
-                    height: 80px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 0 auto;
-                }
-                .segment-title {
-                    color: #21305c;
-                    font-size: 1.5rem;
-                    margin-bottom: 1rem;
-                    font-weight: 600;
-                }
-                .segment-description {
-                    color: #6c757d;
-                    line-height: 1.6;
-                    margin-bottom: 0;
-                }
-                @media (max-width: 768px) {
-                    .section-title {
-                        font-size: 2rem;
-                    }
-                    .segment-card {
-                        padding: 1.5rem;
-                    }
-                }
-            `}</style>
-        </section>
-    );
-};
-
-export default SegmentsSection; 
+        <div className={styles.more} data-aos="fade-up" data-aos-delay="150">
+          <p className={styles.moreLabel}>Também atendemos</p>
+          <div className={styles.chips}>
+            {moreSegments.map((item) => {
+              const Icon = item.icon;
+              return (
+                <span key={item.label} className={styles.chip}>
+                  <Icon size={16} strokeWidth={2} aria-hidden />
+                  {item.label}
+                </span>
+              );
+            })}
+          </div>
+          <Link href="/contato" className={styles.moreLink}>
+            Fale com um consultor
+            <ArrowRight size={16} aria-hidden />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}

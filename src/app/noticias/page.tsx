@@ -1,53 +1,65 @@
+import type { Metadata } from "next";
 import { getDataBlog } from "@/utils/actions/get-data";
-import { BlogProps } from "@/utils/blog.type"
+import { BlogProps } from "@/utils/blog.type";
 import Image from "next/image";
 import Link from "next/link";
+import styles from "./page.module.css";
 
-const truncateText = (text, maxLength) => {
-    if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength) + '...';
+export const metadata: Metadata = {
+  title: "Notícias",
+  description: "Novidades, dicas e conteúdos da MCN Sistemas.",
 };
 
+function truncateText(text: string, maxLength: number) {
+  if (!text) return "";
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength).trimEnd() + "…";
+}
+
 export default async function Noticias() {
+  const data: BlogProps = await getDataBlog();
+  const posts = data?.objects ?? [];
 
-    const data: BlogProps = await getDataBlog();
+  return (
+    <section className={styles.section}>
+      <div className="container">
+        <div className={styles.header} data-aos="fade-down">
+          <h1 className="section-title">Notícias</h1>
+          <div className="section-underline" />
+          <p className="section-lead">
+            Conteúdos e novidades para o seu negócio
+          </p>
+        </div>
 
-    return (
-        <section className="bg-light p-3 p-md-5">
-            <div className="container">
-                <h4 className="text-center display-5 mb-md-5" data-aos="fade-down">
-                    <span className="section-title">Notícias</span>
-                </h4>
-
-
-                <div className="row row-cols-1 row-cols-md-3 g-4">
-                    {data.objects.map((news) => (
-                        <div className="col" key={news.slug}>
-                            <div className="card">
-                                <Image
-                                    src={news.metadata.capa.url}
-                                    className="card-img-top"
-                                    alt="Imagem de capa do blog"
-                                    width={200}
-                                    height={280}
-                                />
-                                <div className="card-body">
-                                    <h5 className="card-title">
-                                        {news.title}
-                                    </h5>
-                                    <p className="card-text">
-                                        {truncateText(news.metadata.posts.descricao, 150)}
-                                    </p>
-                                    <Link href={`/noticias/${news.slug}`}>
-                                        <button className="btn btn-outline-dark">Leia mais</button>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-            </div>
-        </section >
-    )
+        <div className={styles.grid}>
+          {posts.map((news) => (
+            <article className={styles.card} key={news.slug}>
+              <div className={styles.imageWrap}>
+                <Image
+                  src={news.metadata.capa.url}
+                  alt={news.title}
+                  fill
+                  className={styles.image}
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+              </div>
+              <div className={styles.body}>
+                <h2 className={styles.title}>{news.title}</h2>
+                <p className={styles.excerpt}>
+                  {truncateText(news.metadata.posts.descricao, 150)}
+                </p>
+                <Link
+                  href={`/noticias/${news.slug}`}
+                  className="btn-mcn btn-mcn-outline"
+                  style={{ alignSelf: "flex-start", padding: "0.55rem 1.1rem" }}
+                >
+                  Ler mais
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

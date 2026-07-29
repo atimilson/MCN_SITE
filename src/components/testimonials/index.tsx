@@ -1,58 +1,55 @@
-"use client"
+"use client";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css/scrollbar';
-import 'swiper/css/effect-fade';
-import {
-    Autoplay,
-    EffectFade,
-    Parallax,
-    Navigation,
-} from "swiper/modules";
-import Image from 'next/image';
-import { HomeProps } from '@/utils/home.type';
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Autoplay, Pagination } from "swiper/modules";
+import Image from "next/image";
+import { HomeProps } from "@/utils/home.type";
+import styles from "./styles.module.css";
 
 export function Testimonials({ object }: HomeProps) {
+  const items = object?.metadata?.testimonials ?? [];
 
-    return (
-        <>
-            <Swiper
-                modules={[Autoplay, EffectFade, Parallax, Navigation]}
-                slidesPerView={2}
-                pagination={{ clickable: true }}
-                breakpoints={{
-                    320: { slidesPerView: 1, spaceBetween: 20 },
-                    480: { slidesPerView: 2, spaceBetween: 30 },
-                }}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true,
-                }}
-                navigation={false}
-            >
-                {object.metadata.testimonials.map((item) => (
-                    <SwiperSlide key={item.company}>
-                        <div className='card shadow p-3 rounded'>
-                            <div className='d-flex align-items-center'>
-                                <Image src={item.image.url} alt='Slide banner' width={70} height={70} className='rounded-circle' />
-                                <h6 className="card-title ms-3">{item.company}</h6>
-                            </div>
+  if (!items.length) return null;
 
-                            <div className='card-body'>
-                                <p className="card-text">{item.description}</p>
-                            </div>
-                        </div>
-
-                    </SwiperSlide>
-                ))}
-
-            </Swiper>
-        </>
-    )
+  return (
+    <Swiper
+      modules={[Autoplay, Pagination]}
+      slidesPerView={1}
+      spaceBetween={20}
+      pagination={{ clickable: true }}
+      breakpoints={{
+        640: { slidesPerView: 1, spaceBetween: 16 },
+        768: { slidesPerView: 2, spaceBetween: 24 },
+        1100: { slidesPerView: 3, spaceBetween: 24 },
+      }}
+      autoplay={{
+        delay: 4500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      }}
+    >
+      {items.map((item) => (
+        <SwiperSlide key={item.company}>
+          <article className={styles.card}>
+            <div className={styles.header}>
+              <Image
+                src={item.image.url}
+                alt={item.company}
+                width={56}
+                height={56}
+                className={styles.avatar}
+              />
+              <h3 className={styles.company}>{item.company}</h3>
+            </div>
+            <span className={styles.quoteMark} aria-hidden>
+              “
+            </span>
+            <p className={styles.quote}>{item.description}</p>
+          </article>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  );
 }

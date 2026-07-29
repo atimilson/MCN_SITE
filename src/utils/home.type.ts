@@ -1,29 +1,25 @@
 export interface HomeProps {
-    object: {
-        slug: string;
-        title: string
+  object: {
+    slug: string;
+    title: string;
+    metadata: {
+      testimonials: TestimonialProps[];
+      slider: SliderProps[];
+    };
+  };
+}
 
-        metadata: {
-
-            testimonials: {
-                map: any;
-                image: {
-                    url: string;
-
-                };
-                company: string;
-                description: string
-            };
-
-            slider: SliderProps[];
-        };
-    }
-
+export interface TestimonialProps {
+  image: {
+    url: string;
+  };
+  company: string;
+  description: string;
 }
 
 interface SliderProps {
-    image: {
-        url: string;
-    };
-    text: string
+  image: {
+    url: string;
+  };
+  text: string;
 }

@@ -6,6 +6,18 @@ const nextConfig = {
           protocol: 'https',
           hostname: 'cdn.cosmicjs.com',
         },
+        {
+          protocol: 'https',
+          hostname: '**.cdninstagram.com',
+        },
+        {
+          protocol: 'https',
+          hostname: '**.fbcdn.net',
+        },
+        {
+          protocol: 'https',
+          hostname: 'scontent.cdninstagram.com',
+        },
       ],
     },
     async headers() {

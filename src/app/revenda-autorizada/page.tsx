@@ -1,30 +1,45 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/hero";
 import { RevendaProps } from "@/utils/revenda";
 import { getDataRevenda } from "@/utils/actions/get-data";
 import { Revenda } from "@/components/revenda";
 
-export default async function revendaAutorizada() {
-    const data: { objects: RevendaProps["objects"] } = await getDataRevenda();
+export const metadata: Metadata = {
+  title: "Revenda autorizada",
+  description: "Parceiros e revendas autorizadas da MCN Sistemas.",
+};
 
-    return (
-        <>
-            <Hero
-                title="Revenda Autorizada"
-                banner="/assets/images/banner-revenda.jpg"
-            />
-            <section className="p-md-5 p-3 container">
-                <h1 className="section-title mb-5">Revenda Autorizada</h1>
+export default async function RevendaAutorizada() {
+  const data: { objects: RevendaProps["objects"] } = await getDataRevenda();
 
-                {data.objects.length > 0 ? (
-                    <Revenda objects={data.objects} />
-                ) : (
-                    <div className="text-center p-5">
-                        <p className="text-muted fs-5">
-                            No momento, não há empresas parceiras registradas. Por favor, volte mais tarde para conferir as atualizações.
-                        </p>
-                    </div>
-                )}
-            </section>
-        </>
-    );
+  return (
+    <>
+      <Hero
+        title="Revenda autorizada"
+        eyebrow="Parceiros"
+        banner="/assets/images/banner-revenda.jpg"
+      />
+      <section className="page-section page-section--muted">
+        <div className="container">
+          <div className="text-center mb-4">
+            <h2 className="section-title">Nossas revendas</h2>
+            <div className="section-underline" />
+            <p className="section-lead">
+              Empresas parceiras autorizadas a comercializar a MCN
+            </p>
+          </div>
+
+          {data.objects.length > 0 ? (
+            <Revenda objects={data.objects} />
+          ) : (
+            <div className="text-center p-5 mcn-card">
+              <p className="text-mcn-muted fs-5 mb-0">
+                No momento não há empresas parceiras listadas. Volte em breve.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+    </>
+  );
 }

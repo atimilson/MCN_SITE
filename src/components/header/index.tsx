@@ -1,206 +1,184 @@
 import { ProductProps } from "@/utils/product.type";
 import { AppProps } from "@/utils/aplicativo.type";
-import Link from 'next/link'
-import Image from 'next/image'
-import {
-    Instagram,
-    Mail,
-
-} from "lucide-react";
-
+import Link from "next/link";
+import Image from "next/image";
+import { Instagram, Mail } from "lucide-react";
 import { Product } from "../product";
 import { Aplicativo } from "../aplicativo";
 import { getDataApp, getDataProduct } from "@/utils/actions/get-data";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp, FaYoutube } from "react-icons/fa";
+import styles from "./styles.module.css";
 
 export async function Header() {
+  const { objects }: ProductProps = await getDataProduct();
+  const data: AppProps = await getDataApp();
 
+  return (
+    <header className={styles.header}>
+      <div className={styles.topBar}>
+        <div className={`container ${styles.topInner}`}>
+          <div className={styles.topLeft}>
+            <Link
+              href="mailto:glaucia@mcnsistemas.com.br"
+              className={styles.topLink}
+            >
+              <Mail size={16} />
+              <span className="d-none d-xl-inline">
+                glaucia@mcnsistemas.com.br
+              </span>
+            </Link>
+          </div>
 
+          <div className={styles.topRight}>
+            <Link href="/video" className={styles.youtubeChip}>
+              <FaYoutube size={22} color="#ff0000" />
+              <span>Novos vídeos no YouTube</span>
+            </Link>
 
-    const { objects }: ProductProps = await getDataProduct();
-    const data: AppProps = await getDataApp();
+            <Link
+              href="https://wa.me/556592695937?text=Olá! Gostaria de mais informações sobre os sistemas MCN."
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.waChip}
+            >
+              <FaWhatsapp size={18} />
+              <span>Vendas (65) 99269-5937</span>
+            </Link>
 
+            <Link
+              href="https://www.instagram.com/mcnsistemas/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.topLink}
+              aria-label="Instagram MCN Sistemas"
+            >
+              <Instagram size={18} />
+            </Link>
+          </div>
+        </div>
+      </div>
 
+      <div className={styles.brandRow}>
+        <div className={`container ${styles.brandGrid}`}>
+          <Link href="/" className={styles.logoLink}>
+            <Image
+              src="/assets/images/mcnsistemas-logo.png"
+              alt="MCN Sistemas"
+              quality={100}
+              priority
+              width={220}
+              height={90}
+              className="img-fluid"
+            />
+          </Link>
 
-    return (
-        <>
-            <header>
-                <div className="top">
-                    <div className="container p-2 p-md-3 mx-auto text-white d-flex justify-content-between align-items-center">
-                        <Link href="mailto:glaucia@mcnsistemas.com.br" className='text-decoration-none'>
-                            <div className="d-none d-xl-block text-sm text-decoration-none text-white">
-                                <Mail className="me-2" />
-                                glaucia@mcnsistemas.com.br
-                            </div>
-                        </Link>
-                        <div className="d-flex align-items-center justify-content-center flex-grow-1">
-                            <Link href="/video" className="d-flex align-items-center p-2" style={{ backgroundColor: '#21305c', borderRadius: '5px' }}>
-                                <Image
-                                    src="/assets/images/youtube-logo.png"  
-                                    alt="Logo do YouTube"
-                                    quality={100}
-                                    priority={true}
-                                    width={50}
-                                    height={50}
-                                    className="img-fluid me-2"
-                                />
-                                <span className="text-white fw-bold">Acesse novos vídeos</span>
-                            </Link>
-                        </div>
-                        <div className="d-flex align-items-center justify-content-center flex-grow-1">
-                            <Link 
-                                href="https://wa.me/556592695937?text=Olá! Gostaria de mais informações sobre os sistemas MCN." 
-                                target="_blank" 
-                                className="whatsapp-button d-flex align-items-center gap-2 px-3 py-2"
-                            >
-                                <FaWhatsapp size={24} className="whatsapp-icon" />
-                                <div className="d-flex flex-column">
-                                    <span className="whatsapp-text fw-bold">Fone Vendas</span>
-                                    <span className="whatsapp-number">(65) 99269-5937</span>
-                                </div>
-                            </Link>
-                        </div>
-                        <div className="ms-md-auto me-md-0">
-                            Siga-nos:
-                            <Link
-                                href="https://www.instagram.com/mcnsistemas/"
-                                target="_blank"
-                                className="text-white"
-                            >
-                                <Instagram size={25} className="ms-2 cursor-pointer" />
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                <div className="container p-md-3 p-3">
-                    <div className="row d-flex justify-content-center align-items-center text-center">
-                        <div className="col-md-4 col-12 col-lg-4 mt-2 mt-md-0 text-center text-md-start">
-                            
-                            <Link href="/" className="navbar-brand">
-                                <Image
-                                    src="/assets/images/mcnsistemas-logo.png"
-                                    alt="Logo do site"
-                                    quality={100}
-                                    priority={true}
-                                    width={245}
-                                    height={100}
-                                    className="img-fluid"
-                                />
-                            </Link>
-                        </div>
-                        <div className="col-md-4 col-12 col-lg-4 mt-3 mt-md-0 d-none d-md-block">
-                            <a href="https://mcn-tutoriais.s3.sa-east-1.amazonaws.com/TeamViewerQS10.exe" download className="navbar-brand" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-custom-class="custom-tooltip"
-                                data-bs-title="This top tooltip is themed via CSS variables.">
+          <div className={`${styles.downloadLinks} d-none d-md-flex`}>
+            <a
+              href="https://mcn-tutoriais.s3.sa-east-1.amazonaws.com/TeamViewerQS10.exe"
+              download
+              className={styles.downloadLink}
+              title="Baixar TeamViewer"
+            >
+              <Image
+                src="/assets/images/mcnsistemas-baixe-o-teamviewer.png"
+                alt="Baixe o TeamViewer"
+                quality={90}
+                width={220}
+                height={56}
+                className="img-fluid"
+              />
+            </a>
+            <a
+              href="https://mcn-tutoriais.s3.sa-east-1.amazonaws.com/AnyDesk.exe"
+              download
+              className={styles.downloadLink}
+              title="Baixar AnyDesk"
+            >
+              <Image
+                src="/assets/images/mcnsistemas-anydesk-download.png"
+                alt="Baixe o AnyDesk"
+                quality={90}
+                width={180}
+                height={56}
+                className="img-fluid"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
 
-                                <Image
-                                    src="/assets/images/mcnsistemas-baixe-o-teamviewer.png"
-                                    alt="Logo do site"
-                                    quality={100}
-                                    priority={true}
-                                    width={270}
-                                    height={69}
-                                    className="img-fluid"
-
-                                />
-                            </a>
-
-                        </div>
-                        <div className="col-6 col-md-4 col-lg-4 mt-3 mt-md-0 d-none d-md-block">
-                            <div>
-                                <a href="https://mcn-tutoriais.s3.sa-east-1.amazonaws.com/AnyDesk.exe" download className="navbar-brand">
-                                    <Image
-                                        src="/assets/images/mcnsistemas-anydesk-download.png"
-                                        alt="Logo do site"
-                                        quality={100}
-                                        priority={true}
-                                        width={217}
-                                        height={67}
-                                        className="img-fluid"
-
-                                    />
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <nav className="navbar navbar-expand-lg bg-body-tertiary">
-                    <div className="container">
-                        <button
-                            className="navbar-toggler"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#navbarText"
-                            aria-controls="navbarText"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                        >
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarText">
-                            <ul className="navbar-nav mx-auto">
-                                <li className="nav-item mx-lg-2 mx-xl-2">
-                                    <Link className="nav-link" href="/sobre">
-                                        SOBRE NÓS
-                                    </Link>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <a
-                                        className="nav-link dropdown-toggle"
-                                        href="#"
-                                        role="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
-                                        PRODUTOS
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <Product objects={objects} />
-                                    </ul>
-
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <a
-                                        className="nav-link dropdown-toggle"
-                                        href="#"
-                                        role="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
-                                        APLICATIVOS
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <Aplicativo data={data} />
-                                    </ul>
-
-                                </li>
-
-
-                                <li className="nav-item mx-lg-2 mx-xl-2">
-                                    <Link className="nav-link" href="/revenda-autorizada">
-                                        REVENDA AUTORIZADA
-                                    </Link>
-                                </li>
-
-                                <li className="nav-item mx-lg-2 mx-xl-2">
-                                    <Link className="nav-link" href="/noticias">
-                                        NOTÍCIAS
-                                    </Link>
-                                </li>
-
-                                <li className="nav-item mx-lg-2 mx-xl-2">
-                                    <Link className="nav-link" href="/contato">
-                                        CONTATO
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                
-            </header>
-        </>
-
-    )
+      <nav className={`navbar navbar-expand-lg ${styles.navBar}`}>
+        <div className="container">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarText"
+            aria-controls="navbarText"
+            aria-expanded="false"
+            aria-label="Abrir menu de navegação"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="navbarText">
+            <ul className="navbar-nav mx-auto">
+              <li className="nav-item">
+                <Link className="nav-link" href="/sobre">
+                  Sobre nós
+                </Link>
+              </li>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Produtos
+                </a>
+                <ul className="dropdown-menu">
+                  <Product objects={objects} />
+                </ul>
+              </li>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Aplicativos
+                </a>
+                <ul className="dropdown-menu">
+                  <Aplicativo data={data} />
+                </ul>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" href="/revenda-autorizada">
+                  Revenda autorizada
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" href="/noticias">
+                  Notícias
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" href="/video">
+                  Vídeos
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" href="/contato">
+                  Contato
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
 }

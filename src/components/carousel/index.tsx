@@ -1,47 +1,50 @@
-"use client"
+"use client";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css/scrollbar';
-import 'swiper/css/effect-fade';
-import {
-    Autoplay,
-    EffectFade,
-    Parallax,
-    Navigation,
-} from "swiper/modules";
-import Image from 'next/image';
-import { HomeProps } from '@/utils/home.type';
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/effect-fade";
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+import Image from "next/image";
+import { HomeProps } from "@/utils/home.type";
+import styles from "./styles.module.css";
 
 export function Carousel({ object }: HomeProps) {
+  const slides = object?.metadata?.slider ?? [];
 
-    return (
-        <>
-            <Swiper
-                modules={[Autoplay, EffectFade, Parallax, Navigation]}
-                slidesPerView={1}
-                pagination={{ clickable: true }}
+  if (!slides.length) return null;
 
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true,
-                }}
-                navigation={true}
-            >
-                {object.metadata.slider?.map((banner) => (
-                    <SwiperSlide key={banner.text}>
-                        <Image src={banner.image.url} alt={banner.text} width={2715} height={600} className='img-fluid' />
-                    </SwiperSlide>
-                ))}
-
-
-            </Swiper >
-
-        </>
-    )
+  return (
+    <div className={styles.wrapper}>
+      <Swiper
+        modules={[Autoplay, EffectFade, Navigation, Pagination]}
+        slidesPerView={1}
+        effect="fade"
+        pagination={{ clickable: true }}
+        navigation
+        loop={slides.length > 1}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+      >
+        {slides.map((banner) => (
+          <SwiperSlide key={banner.text || banner.image.url}>
+            <div className={styles.slide}>
+              <Image
+                src={banner.image.url}
+                alt={banner.text || "Banner MCN Sistemas"}
+                fill
+                priority
+                className={styles.image}
+                sizes="100vw"
+              />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
 }
