@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   ArrowRight,
   Boxes,
@@ -43,7 +44,7 @@ const ITEMS = [
   },
 ];
 
-/** 2. O que resolve — uma lista objetiva de capacidades, sem enfeites. */
+/** 2. O que resolve — capacidades da plataforma e uma ilustração de apoio. */
 export function Platform() {
   return (
     <section className="section section--paper">
@@ -65,6 +66,16 @@ export function Platform() {
           >
             Ver funcionando na prática <ArrowRight size={16} />
           </a>
+          <div className={styles.illustration} aria-hidden="true">
+            <Image
+              src="/assets/images/home/plataforma-integrada.webp"
+              alt=""
+              width={768}
+              height={512}
+              sizes="(max-width: 600px) 260px, 340px"
+              className={styles.image}
+            />
+          </div>
         </header>
 
         <ul className={styles.list}>

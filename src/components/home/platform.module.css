@@ -18,6 +18,19 @@
   margin-top: 24px;
 }
 
+.illustration {
+  width: 100%;
+  max-width: 340px;
+  margin-top: 28px;
+  pointer-events: none;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
 .list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -71,6 +84,11 @@
 }
 
 @media (max-width: 600px) {
+  .illustration {
+    max-width: 260px;
+    align-self: center;
+  }
+
   .list {
     grid-template-columns: 1fr;
   }

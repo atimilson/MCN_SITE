@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { iconFor } from "@/lib/icons";
@@ -18,16 +19,29 @@ export function Segments({ products }: { products: ObjectProduct[] }) {
   return (
     <section className="section" id="solucoes">
       <div className="container">
-        <header className="section-head section-head--center" data-reveal>
-          <span className="eyebrow">Para o seu segmento</span>
-          <h2>
-            Um sistema feito para o <span className="text-gradient">seu tipo de loja</span>
-          </h2>
-          <p>
-            Escolha o seu ramo e veja os módulos pensados para a rotina dele — do balcão ao
-            fiscal.
-          </p>
-        </header>
+        <div className={styles.heading}>
+          <header className={`section-head ${styles.intro}`} data-reveal>
+            <span className="eyebrow">Para o seu segmento</span>
+            <h2>
+              Um sistema feito para o <span className="text-gradient">seu tipo de loja</span>
+            </h2>
+            <p>
+              Escolha o seu ramo e veja os módulos pensados para a rotina dele — do balcão ao
+              fiscal.
+            </p>
+          </header>
+
+          <div className={styles.illustration} aria-hidden="true" data-reveal>
+            <Image
+              src="/assets/images/home/segmentos-lojas.webp"
+              alt=""
+              width={768}
+              height={512}
+              sizes="(max-width: 800px) 220px, 320px"
+              className={styles.image}
+            />
+          </div>
+        </div>
 
         <div className={styles.grid}>
           {ordered.map((p, i) => {
