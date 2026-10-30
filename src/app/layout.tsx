@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
-import InstallBootstrap from "@/components/InstallBootstrap";
+import { Reveal } from "@/components/reveal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,25 +12,38 @@ const inter = Inter({
   display: "swap",
 });
 
+const display = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-display-face",
+  display: "swap",
+});
+
+export const viewport: Viewport = {
+  themeColor: "#070e2b",
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.mcnsistemas.com.br"),
   title: {
     default:
-      "MCN Sistemas | ERP para Material de Construção, Auto Peças e Distribuidoras",
-    template: "%s | MCN Sistemas",
+      "MCN Software | ERP para Material de Construção, Auto Peças e Distribuidoras",
+    template: "%s | MCN Software",
   },
   description:
-    "Software especializado para materiais de construção, auto peças, distribuidoras, ferragens, acabamentos e lojas de tintas. Desde 2002 no mercado.",
+    "Software de gestão especializado para materiais de construção, auto peças, distribuidoras, ferragens, acabamentos e lojas de tintas. Desde 2002, mais de 500 clientes em 13 estados.",
   keywords: [
     "ERP",
-    "sistema gestão",
+    "sistema de gestão",
     "material de construção",
     "auto peças",
     "distribuidora",
+    "MCN Software",
     "MCN Sistemas",
     "Cuiabá",
   ],
   openGraph: {
-    title: "MCN Sistemas",
+    title: "MCN Software",
     description:
       "ERP especializado para materiais de construção, auto peças e distribuidoras.",
     locale: "pt_BR",
@@ -45,8 +57,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={`${inter.variable} ${display.variable}`}>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js');`,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -73,12 +90,12 @@ export default function RootLayout({
           />
         </noscript>
       </head>
-      <body className={`${inter.variable} ${inter.className}`}>
-        <InstallBootstrap />
+      <body>
         <Header />
         {children}
         <Footer />
         <WhatsAppFloat />
+        <Reveal />
       </body>
     </html>
   );

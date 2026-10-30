@@ -1,0 +1,82 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+  padding: 0 20px 0 16px;
+  border-radius: 12px;
+  color: var(--white);
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: transform var(--t), border-color var(--t), box-shadow var(--t);
+}
+
+.badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.6);
+}
+
+.badge span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.badge small {
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.badge strong {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(160, 182, 255, 0.16);
+  transition: background var(--t), border-color var(--t), transform var(--t);
+}
+
+.link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(126, 227, 250, 0.4);
+  transform: translateY(-2px);
+}
+
+.link > svg {
+  flex-shrink: 0;
+  color: var(--cyan-300);
+}
+
+.link span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.link strong {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.link small {
+  font-size: 0.72rem;
+  color: var(--on-dark-2);
+}

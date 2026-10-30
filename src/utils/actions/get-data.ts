@@ -46,16 +46,25 @@ export async function getDataBlog() {
   try {
     const query = encodeURIComponent(JSON.stringify({ type: "noticias" }));
     return await cosmicFetch(
-      `/objects?pretty=true&query=${query}&limit=10&depth=1&props=slug,title,metadata,`
+      `/objects?query=${query}&limit=12&depth=1&props=slug,title,metadata,published_at&sort=-created_at`
     );
   } catch {
     throw new Error("Failed to fetch blog data");
   }
 }
 
+/** Executa uma busca e devolve um fallback em caso de erro (ex.: Cosmic 404 sem resultados). */
+export async function safe<T>(promise: Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await promise;
+  } catch {
+    return fallback;
+  }
+}
+
 export async function getItemBySlug(slug: string) {
   const queryParams = new URLSearchParams({
-    query: JSON.stringify({ slug }),
+    query: JSON.stringify({ type: "noticias", slug }),
     props: "slug, title, content, metadata,published_at",
   });
 
@@ -70,7 +79,7 @@ export async function getDataProduct() {
   try {
     const query = encodeURIComponent(JSON.stringify({ type: "produtos" }));
     return await cosmicFetch(
-      `/objects?query=${query}&props=slug,title`
+      `/objects?query=${query}&props=slug,title,metadata&depth=1&sort=-created_at`
     );
   } catch {
     throw new Error("Failed to fetch products");
@@ -79,7 +88,7 @@ export async function getDataProduct() {
 
 export async function getProductBySlug(slug: string) {
   const queryParams = new URLSearchParams({
-    query: JSON.stringify({ slug }),
+    query: JSON.stringify({ type: "produtos", slug }),
     props: "slug, title, content, metadata,published_at",
   });
 
@@ -94,7 +103,7 @@ export async function getDataApp() {
   try {
     const query = encodeURIComponent(JSON.stringify({ type: "aplicativos" }));
     return await cosmicFetch(
-      `/objects?pretty=true&query=${query}&limit=10&depth=1&props=slug,title`
+      `/objects?query=${query}&limit=20&depth=1&props=slug,title,metadata&sort=-created_at`
     );
   } catch {
     throw new Error("Failed to fetch apps");
@@ -103,7 +112,7 @@ export async function getDataApp() {
 
 export async function getAppBySlug(slug: string) {
   const queryParams = new URLSearchParams({
-    query: JSON.stringify({ slug }),
+    query: JSON.stringify({ type: "aplicativos", slug }),
     props: "slug, title, content, metadata,published_at",
   });
 

@@ -1,10 +1,10 @@
 import { Instagram } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
 import {
   getInstagramPosts,
   type InstagramPost,
 } from "@/utils/actions/get-instagram-posts";
+import { SITE } from "@/lib/site";
 import styles from "./simple.module.css";
 
 type Props = {
@@ -12,60 +12,58 @@ type Props = {
   source?: "graph" | "fallback";
 };
 
-export default async function SimpleInstagramFeed({ posts, source }: Props) {
+export default async function SimpleInstagramFeed({ posts }: Props) {
   const feed =
-    posts && posts.length > 0
-      ? { posts, source: source ?? ("fallback" as const) }
-      : await getInstagramPosts(6);
+    posts && posts.length > 0 ? posts : (await getInstagramPosts(6)).posts;
 
   return (
-    <div className={styles.container}>
-      <Link
-        href="https://www.instagram.com/mcnsistemas/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.profile}
-      >
-        <Instagram size={22} />
-        @mcnsistemas
-      </Link>
-
-      <div className={styles.grid}>
-        {feed.posts.map((post) => (
-          <Link
-            key={post.id}
-            href={post.postUrl}
+    <section className="section">
+      <div className="container">
+        <div className={styles.head}>
+          <div data-reveal>
+            <span className="eyebrow">Instagram</span>
+            <h2 className="h2">
+              Acompanhe a <span className="text-gradient">@mcnsistemas</span>
+            </h2>
+          </div>
+          <a
+            href={SITE.social.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.post}
+            className={`btn ${styles.follow}`}
+            data-reveal
           >
-            <Image
-              src={post.imageUrl}
-              alt={post.caption}
-              fill
-              className={styles.image}
-              sizes="(max-width: 768px) 50vw, 33vw"
-              unoptimized
-            />
-            <div className={styles.overlay}>
-              <Instagram size={28} color="white" />
-              <p className={styles.caption}>{post.caption}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
+            <Instagram size={18} /> Seguir no Instagram
+          </a>
+        </div>
 
-      <div className={styles.cta}>
-        <Link
-          href="https://www.instagram.com/mcnsistemas/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-mcn btn-mcn-outline"
-        >
-          <Instagram size={18} />
-          Ver mais no Instagram
-        </Link>
+        <div className={styles.grid}>
+          {feed.map((post, i) => (
+            <a
+              key={post.id}
+              href={post.postUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.post}
+              data-reveal
+              style={{ "--d": `${i * 60}ms` } as React.CSSProperties}
+            >
+              <Image
+                src={post.imageUrl}
+                alt={post.caption}
+                fill
+                className={styles.image}
+                sizes="(max-width: 768px) 50vw, 17vw"
+                unoptimized={post.imageUrl.startsWith("http")}
+              />
+              <div className={styles.overlay}>
+                <Instagram size={22} />
+                <p>{post.caption}</p>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

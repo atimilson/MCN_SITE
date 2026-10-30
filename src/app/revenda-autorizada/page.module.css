@@ -1,0 +1,75 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 640px;
+  margin-inline: auto;
+  padding: clamp(40px, 6vw, 64px) 28px;
+  text-align: center;
+  border-radius: var(--r-xl);
+  background: var(--white);
+  border: 1px dashed var(--line-strong);
+}
+
+.empty h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.empty p {
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.emptyIcon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  color: var(--white);
+  background: var(--grad-brand);
+  box-shadow: var(--sh-glow);
+}
+
+.perks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.perk {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 32px;
+  border-radius: var(--r-xl);
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+
+.perk > span {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 6px;
+  border-radius: 14px;
+  color: var(--brand-600);
+  background: linear-gradient(135deg, rgba(47, 212, 245, 0.16), rgba(47, 107, 255, 0.16));
+}
+
+.perk h3 {
+  font-size: 1.2rem;
+}
+
+.perk p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 860px) {
+  .perks {
+    grid-template-columns: 1fr;
+  }
+}

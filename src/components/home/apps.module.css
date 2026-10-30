@@ -1,0 +1,137 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.stores {
+  margin-top: 28px;
+}
+
+.storesLabel {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+
+.storesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 420px) {
+  .storesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.shot {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--white);
+  border: 6px solid rgba(255, 255, 255, 0.08);
+  background-clip: padding-box;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+}
+
+.shotImg {
+  object-fit: contain;
+}
+
+.list {
+  border-top: 1px solid var(--on-dark-line);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 4px;
+  border-bottom: 1px solid var(--on-dark-line);
+  color: var(--on-dark);
+  transition: padding var(--t), background var(--t);
+}
+
+.row:hover {
+  padding-left: 14px;
+  background: linear-gradient(90deg, rgba(47, 107, 255, 0.12), transparent 70%);
+}
+
+.num {
+  width: 24px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--on-dark-2);
+  opacity: 0.6;
+}
+
+.icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  color: var(--cyan-300);
+  background: rgba(47, 212, 245, 0.08);
+  border: 1px solid rgba(47, 212, 245, 0.2);
+}
+
+.name {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 1.06rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.onPlay {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--cyan-300);
+  background: rgba(47, 212, 245, 0.08);
+  border: 1px solid rgba(47, 212, 245, 0.2);
+}
+
+.arrow {
+  flex-shrink: 0;
+  color: var(--on-dark-2);
+  transition: transform var(--t), color var(--t);
+}
+
+.row:hover .arrow {
+  color: var(--cyan-300);
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .num {
+    display: none;
+  }
+}

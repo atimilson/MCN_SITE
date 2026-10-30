@@ -1,23 +1,7 @@
+import type { ObjectProduct } from "./product.type";
+
 export interface AppProps {
-    objects: ObjectApp[]
+  objects: ObjectApp[];
 }
 
-interface ObjectApp {
-    slug: string;
-    title: string
-
-    metadata: {
-
-
-        capa: {
-
-            url: string;
-
-        };
-
-        descricao: string;
-
-
-    };
-}
-
+export type ObjectApp = ObjectProduct;

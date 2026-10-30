@@ -1,10 +1,8 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { useState } from "react";
+import { Play } from "lucide-react";
+import { getYouTubeId } from "@/lib/content";
 import styles from "./styles.module.css";
 
 type VideoLink = {
@@ -20,63 +18,77 @@ type Category = {
   };
 };
 
-function getVideoId(url: string) {
-  const regExp =
-    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  return match && match[2].length === 11 ? match[2] : null;
+function VideoCard({ id, title, index }: { id: string; title: string; index: number }) {
+  const [playing, setPlaying] = useState(false);
+
+  return (
+    <article className={styles.card} data-reveal style={{ "--d": `${(index % 3) * 90}ms` } as React.CSSProperties}>
+      <div className={styles.player}>
+        {playing ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}
+            title={title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          <button type="button" className={styles.poster} onClick={() => setPlaying(true)} aria-label={`Assistir: ${title}`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" loading="lazy" />
+            <span className={styles.play}>
+              <Play size={26} fill="currentColor" />
+            </span>
+          </button>
+        )}
+      </div>
+      <h3 className={styles.cardTitle}>{title}</h3>
+    </article>
+  );
 }
 
 export function VideoGallery({ categories }: { categories: Category[] }) {
-  if (!categories?.length) {
-    return (
-      <p className={styles.empty}>Nenhum vídeo disponível no momento.</p>
-    );
+  const usable = (categories ?? []).filter((c) => c.metadata?.links?.length);
+  const [active, setActive] = useState(usable[0]?.slug);
+
+  if (!usable.length) {
+    return <p className={styles.empty}>Nenhum vídeo disponível no momento.</p>;
   }
 
-  return (
-    <>
-      {categories.map((category) => (
-        <section key={category.slug} className={styles.category}>
-          <h2 className={styles.categoryTitle}>
-            {category.metadata.category_name}
-          </h2>
-          <Swiper
-            modules={[Navigation, Pagination]}
-            navigation
-            pagination={{ clickable: true }}
-            spaceBetween={20}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-              1280: { slidesPerView: 4 },
-            }}
-            className={styles.swiper}
-          >
-            {category.metadata.links.map((video, index) => {
-              const videoId = getVideoId(video.url);
-              if (!videoId) return null;
+  const current = usable.find((c) => c.slug === active) ?? usable[0];
+  const videos = current.metadata.links
+    .map((v) => ({ id: getYouTubeId(v.url), title: v.link_title }))
+    .filter((v): v is { id: string; title: string } => !!v.id);
 
-              return (
-                <SwiperSlide key={`${category.slug}-${index}`}>
-                  <article className={styles.card}>
-                    <h3 className={styles.cardTitle}>{video.link_title}</h3>
-                    <iframe
-                      className={styles.frame}
-                      src={`https://www.youtube.com/embed/${videoId}`}
-                      title={video.link_title}
-                      allowFullScreen
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    />
-                  </article>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-        </section>
-      ))}
-    </>
+  return (
+    <div>
+      {usable.length > 1 ? (
+        <div className={styles.tabs} role="tablist">
+          {usable.map((c) => (
+            <button
+              key={c.slug}
+              type="button"
+              role="tab"
+              aria-selected={c.slug === current.slug}
+              className={`${styles.tab} ${c.slug === current.slug ? styles.tabActive : ""}`}
+              onClick={() => setActive(c.slug)}
+            >
+              {c.metadata.category_name}
+              <span>{c.metadata.links.length}</span>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <h2 className={styles.categoryTitle}>
+          {current.metadata.category_name}
+          <span>{videos.length} vídeos</span>
+        </h2>
+      )}
+
+      <div className={styles.grid} key={current.slug}>
+        {videos.map((v, i) => (
+          <VideoCard key={`${v.id}-${i}`} id={v.id} title={v.title} index={i} />
+        ))}
+      </div>
+    </div>
   );
 }

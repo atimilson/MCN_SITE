@@ -1,84 +1,81 @@
-import { PhoneCall } from "lucide-react";
 import Link from "next/link";
-import { Carousel } from "@/components/carousel";
+import { ArrowRight } from "lucide-react";
 import { Testimonials } from "@/components/testimonials";
-import { getDataHome } from "@/utils/actions/get-data";
-import { HomeProps } from "@/utils/home.type";
 import CTASection from "@/components/cta-section";
-import SegmentsSection from "@/components/segments-section";
+import { NewsCard } from "@/components/news-card";
 import SimpleInstagramFeed from "@/components/instagram/simple";
+import { HomeHero } from "@/components/home/hero";
+import { Segments } from "@/components/home/segments";
+import { Platform } from "@/components/home/platform";
+import { AppsShowcase } from "@/components/home/apps";
+import { AboutTeaser } from "@/components/home/about";
+import {
+  getDataApp,
+  getDataBlog,
+  getDataHome,
+  getDataProduct,
+  safe,
+} from "@/utils/actions/get-data";
 import { getInstagramPosts } from "@/utils/actions/get-instagram-posts";
+import type { HomeProps } from "@/utils/home.type";
+import type { ProductProps } from "@/utils/product.type";
+import type { AppProps } from "@/utils/aplicativo.type";
+import type { BlogProps } from "@/utils/blog.type";
 import styles from "./page.module.css";
 
+/**
+ * Narrativa da home, uma pergunta por seção:
+ * hero (o que é) → segmentos (é para mim?) → plataforma (o que resolve)
+ * → apps (até onde vai) → quem somos (posso confiar?) → depoimentos (prova)
+ * → notícias + Instagram (está ativo) → CTA (próximo passo).
+ */
 export default async function Home() {
-  const [{ object }, instagram] = await Promise.all([
-    getDataHome(),
+  const [home, products, apps, blog, instagram] = await Promise.all([
+    safe<HomeProps | null>(getDataHome(), null),
+    safe<ProductProps>(getDataProduct(), { objects: [] }),
+    safe<AppProps>(getDataApp(), { objects: [] }),
+    safe<BlogProps>(getDataBlog(), { objects: [] }),
     getInstagramPosts(6),
   ]);
 
+  const object = home?.object;
+  const posts = blog.objects.slice(0, 3);
+
   return (
     <main>
-      <Carousel object={object} />
-      <SegmentsSection />
+      <HomeHero />
+      <Segments products={products.objects} />
+      <Platform />
+      <AppsShowcase apps={apps.objects} />
+      <AboutTeaser />
+      {object ? <Testimonials object={object} /> : null}
+
+      {posts.length > 0 ? (
+        <section className="section">
+          <div className="container">
+            <div className={styles.head} data-reveal>
+              <div>
+                <span className="eyebrow">Notícias</span>
+                <h2 className="h2">Novidades e conteúdos</h2>
+              </div>
+              <Link href="/noticias" className="link-arrow">
+                Ver todas <ArrowRight size={16} />
+              </Link>
+            </div>
+            <div className={styles.newsGrid}>
+              {posts.map((post, i) => (
+                <NewsCard key={post.slug} post={post} delay={i * 80} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <div className="section--paper">
+        <SimpleInstagramFeed posts={instagram.posts} source={instagram.source} />
+      </div>
+
       <CTASection />
-
-      <section className={styles.testimonialsSection}>
-        <div className="container">
-          <div className={styles.sectionHeader} data-aos="fade-down">
-            <h2 className="section-title">Depoimentos</h2>
-            <div className="section-underline" />
-            <p className="section-lead">
-              Quem usa a MCN recomenda no dia a dia da loja
-            </p>
-          </div>
-          <Testimonials object={object} />
-        </div>
-      </section>
-
-      <section className={styles.instagramSection}>
-        <div className="container">
-          <div className={styles.sectionHeader} data-aos="fade-up">
-            <h2 className="section-title">Instagram</h2>
-            <div className="section-underline" />
-          </div>
-          <SimpleInstagramFeed posts={instagram.posts} source={instagram.source} />
-        </div>
-      </section>
-
-      <section className={styles.contactSection}>
-        <div className="container text-center">
-          <h2 className="section-title">Fale conosco</h2>
-          <div className="section-underline" />
-          <p className="section-lead">
-            Estamos prontos para atender sua empresa
-          </p>
-          <div className={styles.contactButtons}>
-            <Link
-              href="tel:6530544338"
-              className={styles.phoneBtn}
-              data-aos="fade-up"
-            >
-              <PhoneCall size={20} /> (65) 3054-4338
-            </Link>
-            <Link
-              href="tel:6530544339"
-              className={styles.phoneBtn}
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <PhoneCall size={20} /> (65) 3054-4339
-            </Link>
-            <Link
-              href="/contato"
-              className="btn-mcn btn-mcn-primary"
-              data-aos="fade-up"
-              data-aos-delay="150"
-            >
-              Enviar mensagem
-            </Link>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

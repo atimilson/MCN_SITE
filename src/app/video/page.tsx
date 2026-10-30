@@ -1,46 +1,58 @@
 import type { Metadata } from "next";
-import { getDataCategoriasvideo } from "@/utils/actions/get-data";
-import { videoProps } from "@/utils/video.type";
-import { FaYoutube } from "react-icons/fa";
+import { Youtube } from "lucide-react";
+import { Hero } from "@/components/hero";
 import { VideoGallery } from "@/components/video-gallery";
-import styles from "./page.module.css";
+import CTASection from "@/components/cta-section";
+import { getDataCategoriasvideo, safe } from "@/utils/actions/get-data";
+import type { videoProps } from "@/utils/video.type";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Vídeos",
+  title: "Vídeos e tutoriais",
   description: "Tutoriais e conteúdos do canal MCN Software no YouTube.",
 };
 
 export default async function Videos() {
-  let categories: videoProps | null = null;
-
-  try {
-    categories = await getDataCategoriasvideo();
-  } catch {
-    categories = null;
-  }
+  const categories = await safe<videoProps | null>(getDataCategoriasvideo(), null);
 
   return (
-    <div className={styles.page}>
-      <div className="container">
-        <header className={styles.header}>
-          <h1 className="section-title">Vídeos</h1>
-          <div className="section-underline" />
-          <p className="section-lead">
-            Tutoriais e conteúdos do canal MCN Software
-          </p>
-          <a
-            href="https://www.youtube.com/@McnSoftware1731"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.ytBtn}
-          >
-            <FaYoutube size={22} />
-            Visite nosso canal no YouTube
-          </a>
-        </header>
+    <main>
+      <Hero
+        eyebrow="Canal MCN"
+        breadcrumbs={[{ label: "Vídeos" }]}
+        title={
+          <>
+            Aprenda a usar o <span className="text-gradient">sistema MCN</span>
+          </>
+        }
+        description="Tutoriais em vídeo para tirar o máximo de cada recurso — direto do nosso canal no YouTube."
+      >
+        <a
+          href={SITE.social.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn"
+          style={{ color: "#fff", background: "#ff0033", boxShadow: "0 10px 24px -10px rgba(255,0,51,.7)" }}
+        >
+          <Youtube size={20} /> Inscreva-se no canal
+        </a>
+      </Hero>
 
-        <VideoGallery categories={categories?.objects ?? []} />
-      </div>
-    </div>
+      <section className="section">
+        <div className="container">
+          <VideoGallery categories={categories?.objects ?? []} />
+        </div>
+      </section>
+
+      <CTASection
+        title={
+          <>
+            Ficou com <span className="text-gradient">alguma dúvida</span>?
+          </>
+        }
+        text="Nosso suporte está pronto para ajudar. Fale com a gente pelo WhatsApp ou telefone."
+        message="Olá! Assisti aos tutoriais e tenho uma dúvida sobre o sistema MCN."
+      />
+    </main>
   );
 }

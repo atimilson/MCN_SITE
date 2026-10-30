@@ -1,60 +1,53 @@
-"use client";
-
-import { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import { SITE, waLink } from "@/lib/site";
 import styles from "./styles.module.css";
 
-const features = [
-  "Gestão completa e integrada",
-  "Suporte técnico especializado",
-  "Atualizações constantes",
-  "Soluções personalizadas",
-];
+type Props = {
+  title?: React.ReactNode;
+  text?: string;
+  message?: string;
+};
 
-export default function CTASection() {
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-  }, []);
-
-  const handleWhatsAppClick = () => {
-    const url = `https://wa.me/556592695937?text=${encodeURIComponent(
-      "Olá! Gostaria de mais informações sobre os sistemas MCN."
-    )}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
+export default function CTASection({
+  title = (
+    <>
+      Pronto para ter o <span className="text-gradient">controle total</span> da sua
+      empresa?
+    </>
+  ),
+  text = "Fale com um consultor e agende uma demonstração do sistema MCN no seu segmento. Sem compromisso.",
+  message = "Olá! Gostaria de agendar uma demonstração do sistema MCN.",
+}: Props) {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.inner}>
-          <div data-aos="fade-right">
-            <h2 className={styles.title}>Construa com confiança!</h2>
-            <p className={styles.lead}>
-              Descubra como nossos softwares especializados em materiais de
-              construção e autopeças podem impulsionar o seu negócio.
-            </p>
-            <div className={styles.features}>
-              {features.map((item) => (
-                <div key={item} className={styles.feature}>
-                  <span className={styles.check}>✓</span>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
+        <div className={`${styles.panel} on-dark`} data-reveal="zoom">
+          <div className={styles.grid} aria-hidden />
+          <div className={styles.orb} aria-hidden />
+
+          <div className={styles.copy}>
+            <span className="eyebrow">Vamos conversar</span>
+            <h2>{title}</h2>
+            <p>{text}</p>
           </div>
 
-          <div className={styles.action} data-aos="fade-left">
-            <button
-              type="button"
-              className={styles.btn}
-              onClick={handleWhatsAppClick}
+          <div className={styles.actions}>
+            <a
+              href={waLink(message)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--whatsapp btn--lg"
             >
-              <FaWhatsapp size={22} />
-              Solicite um orçamento
-            </button>
-            <p className={styles.hint}>Resposta em até 24 horas</p>
+              <FaWhatsapp size={20} /> Falar no WhatsApp
+            </a>
+            <div className={styles.phones}>
+              {SITE.phones.map((p) => (
+                <a key={p.href} href={p.href} className="btn btn--glass">
+                  <Phone size={16} /> {p.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>

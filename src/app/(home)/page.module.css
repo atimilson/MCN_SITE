@@ -1,49 +1,31 @@
-.contactSection {
-  padding: 4rem 0;
-  background: linear-gradient(180deg, #fff 0%, #f7f9fc 100%);
-}
-
-.contactButtons {
+.head {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 1.75rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
 }
 
-.phoneBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.9rem 1.5rem;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  color: #1a2744 !important;
-  font-weight: 600;
-  font-size: 1rem;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  text-decoration: none !important;
+.head h2 {
+  margin-top: 12px;
 }
 
-.phoneBtn:hover {
-  transform: translateY(-2px);
-  border-color: #0072a7;
-  box-shadow: 0 8px 24px rgba(0, 114, 167, 0.15);
-  color: #0072a7 !important;
+.newsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
 }
 
-.sectionHeader {
-  text-align: center;
-  margin-bottom: 2rem;
+@media (max-width: 960px) {
+  .newsGrid {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
 }
 
-.testimonialsSection {
-  padding: 4rem 0;
-}
-
-.instagramSection {
-  padding: 4rem 0;
-  background: #f7f9fc;
+@media (max-width: 640px) {
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

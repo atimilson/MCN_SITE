@@ -1,86 +1,135 @@
-import { BlogProps } from "@/utils/blog.type";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getItemBySlug } from "@/utils/actions/get-data";
-import { ArrowLeft } from "lucide-react";
+import { notFound } from "next/navigation";
+import { ArrowLeft, CalendarDays, UserRound } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+import { Hero } from "@/components/hero";
+import { NewsCard } from "@/components/news-card";
+import CTASection from "@/components/cta-section";
+import { getDataBlog, getItemBySlug, safe } from "@/utils/actions/get-data";
+import type { BlogProps } from "@/utils/blog.type";
+import { formatDate, truncate } from "@/lib/content";
+import styles from "./page.module.css";
 
-function formatDate(dateString: string): string {
-  try {
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return "Data indisponível";
-    return new Intl.DateTimeFormat("pt-BR", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    }).format(date);
-  } catch {
-    return "Data indisponível";
-  }
+type Params = { params: { slug: string } };
+
+async function load(slug: string) {
+  const data = await safe<BlogProps | null>(getItemBySlug(slug), null);
+  return data?.objects?.[0] ?? null;
 }
 
-export default async function Details({
-  params: { slug },
-}: {
-  params: { slug: string };
-}) {
-  const { objects }: BlogProps = await getItemBySlug(slug);
-  const post = objects[0];
-  const formattedDate = formatDate(post.published_at);
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const post = await load(params.slug);
+  if (!post) return { title: "Notícia não encontrada" };
+  return {
+    title: post.title,
+    description: truncate(post.metadata?.posts?.descricao, 160),
+    openGraph: {
+      type: "article",
+      images: post.metadata?.capa?.url ? [post.metadata.capa.url] : undefined,
+    },
+  };
+}
+
+export default async function NoticiaPage({ params }: Params) {
+  const [post, blog] = await Promise.all([
+    load(params.slug),
+    safe<BlogProps>(getDataBlog(), { objects: [] }),
+  ]);
+  if (!post) notFound();
+
+  const date = formatDate(post.published_at);
+  const author = post.metadata?.posts?.autor;
+  const paragraphs = (post.metadata?.posts?.descricao || "")
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  const others = blog.objects.filter((p) => p.slug !== post.slug).slice(0, 3);
+  const shareText = encodeURIComponent(
+    `${post.title} — https://www.mcnsistemas.com.br/noticias/${post.slug}`
+  );
 
   return (
-    <article className="container py-5">
-      <Link
-        href="/noticias"
-        className="d-inline-flex align-items-center gap-2 mb-4 text-mcn-muted"
-        style={{ fontWeight: 500, fontSize: "0.95rem" }}
-      >
-        <ArrowLeft size={18} /> Voltar para notícias
-      </Link>
+    <main>
+      <Hero
+        eyebrow="Notícia"
+        breadcrumbs={[{ href: "/noticias", label: "Notícias" }, { label: post.title }]}
+        title={post.title}
+        size="lg"
+        description={
+          <div className={styles.meta}>
+            {date ? (
+              <span>
+                <CalendarDays size={16} /> {date}
+              </span>
+            ) : null}
+            {author ? (
+              <span>
+                <UserRound size={16} /> Por {author}
+              </span>
+            ) : null}
+          </div>
+        }
+      />
 
-      <header className="text-center mb-4" style={{ maxWidth: 820, margin: "0 auto 1.5rem" }}>
-        <h1
-          className="text-mcn-navy mb-3"
-          style={{
-            fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
-            fontWeight: 700,
-            letterSpacing: "-0.02em",
-            lineHeight: 1.25,
-          }}
-        >
-          {post.title}
-        </h1>
-        <p className="text-mcn-muted mb-0" style={{ fontSize: "0.95rem" }}>
-          {formattedDate}
-          {post.metadata?.posts?.autor
-            ? ` · Por ${post.metadata.posts.autor}`
-            : null}
-        </p>
-      </header>
+      <article className={styles.article}>
+        <div className="container">
+          {post.metadata?.capa?.url ? (
+            <div className={styles.cover} data-reveal="zoom">
+              <Image
+                src={post.metadata.capa.url}
+                alt={post.title}
+                fill
+                priority
+                sizes="(max-width: 1100px) 100vw, 1040px"
+                className={styles.coverImg}
+              />
+            </div>
+          ) : null}
 
-      <div
-        className="position-relative mx-auto mb-4 overflow-hidden"
-        style={{
-          maxWidth: 920,
-          aspectRatio: "16/9",
-          borderRadius: 16,
-          background: "#e2e8f0",
-        }}
-      >
-        <Image
-          src={post.metadata.capa.url}
-          alt={post.title}
-          fill
-          quality={90}
-          className="object-fit-cover"
-          style={{ objectFit: "cover" }}
-          sizes="(max-width: 992px) 100vw, 920px"
-          priority
-        />
-      </div>
+          <div className={styles.body}>
+            <div className={`prose ${styles.prose}`} data-reveal>
+              {paragraphs.map((p, i) => (
+                <p key={i} className={i === 0 ? styles.first : undefined}>
+                  {p}
+                </p>
+              ))}
+            </div>
 
-      <div className="mcn-prose">
-        <p className="lh-lg">{post.metadata.posts.descricao}</p>
-      </div>
-    </article>
+            <footer className={styles.footer}>
+              <Link href="/noticias" className="btn btn--ghost btn--sm">
+                <ArrowLeft size={16} /> Todas as notícias
+              </Link>
+              <a
+                href={`https://wa.me/?text=${shareText}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--whatsapp btn--sm"
+              >
+                <FaWhatsapp size={16} /> Compartilhar
+              </a>
+            </footer>
+          </div>
+        </div>
+      </article>
+
+      {others.length > 0 ? (
+        <section className="section section--paper section--tight">
+          <div className="container">
+            <h2 className={`h2 ${styles.othersTitle}`} data-reveal>
+              Leia também
+            </h2>
+            <div className={styles.others}>
+              {others.map((p, i) => (
+                <NewsCard key={p.slug} post={p} delay={i * 100} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <CTASection />
+    </main>
   );
 }

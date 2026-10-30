@@ -1,23 +1,15 @@
 export interface ProductProps {
-    objects: ObjectProduct[]
+  objects: ObjectProduct[];
 }
 
-interface ObjectProduct {
-    slug: string;
-    title: string
-
-    metadata: {
-
-
-        capa: {
-
-            url: string;
-
-        };
-
-        descricao: string;
-
-
-    };
+export interface ObjectProduct {
+  slug: string;
+  title: string;
+  published_at?: string;
+  metadata: {
+    capa: {
+      url: string;
+    } | null;
+    descricao: string | null;
+  };
 }
-

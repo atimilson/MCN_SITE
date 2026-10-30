@@ -1,54 +1,59 @@
-import { RevendaProps } from "@/utils/revenda";
 import Image from "next/image";
+import { Globe, Mail, MapPin, UserRound } from "lucide-react";
+import { RevendaProps } from "@/utils/revenda";
 import styles from "./styles.module.css";
 
 export function Revenda({ objects }: RevendaProps) {
+  const items = objects.flatMap((o) => o.metadata?.revenda ?? []);
+
   return (
     <div className={styles.list}>
-      {objects.map((object) =>
-        object.metadata.revenda.map((item) => (
-          <article className={styles.card} key={item.empresa}>
-            <div className={styles.media}>
-              <Image
-                src={item.image.url}
-                alt={item.empresa}
-                fill
-                className={styles.image}
-                sizes="220px"
-              />
-            </div>
-            <div className={styles.body}>
-              <h2 className={styles.title}>{item.empresa}</h2>
-              {item.contato ? (
-                <p className={styles.meta}>{item.contato}</p>
-              ) : null}
-              {item.email ? (
-                <p className={styles.meta}>
-                  <a href={`mailto:${item.email}`}>{item.email}</a>
-                </p>
-              ) : null}
-              {item.endereco ? (
-                <p className={styles.meta}>{item.endereco}</p>
-              ) : null}
-              {item.site ? (
-                <p className={styles.meta}>
-                  <a
-                    href={
-                      item.site.startsWith("http")
-                        ? item.site
-                        : `https://${item.site}`
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {item.site}
-                  </a>
-                </p>
-              ) : null}
-            </div>
-          </article>
-        ))
-      )}
+      {items.map((item, i) => (
+        <article
+          className={styles.card}
+          key={`${item.empresa}-${i}`}
+          data-reveal
+          style={{ "--d": `${(i % 3) * 90}ms` } as React.CSSProperties}
+        >
+          <div className={styles.media}>
+            {item.image?.url ? (
+              <Image src={item.image.url} alt={item.empresa} fill className={styles.image} sizes="120px" />
+            ) : (
+              <span>{item.empresa?.charAt(0)}</span>
+            )}
+          </div>
+          <h2 className={styles.title}>{item.empresa}</h2>
+          <ul className={styles.meta}>
+            {item.contato ? (
+              <li>
+                <UserRound size={16} /> {item.contato}
+              </li>
+            ) : null}
+            {item.email ? (
+              <li>
+                <Mail size={16} /> <a href={`mailto:${item.email}`}>{item.email}</a>
+              </li>
+            ) : null}
+            {item.endereco ? (
+              <li>
+                <MapPin size={16} /> {item.endereco}
+              </li>
+            ) : null}
+            {item.site ? (
+              <li>
+                <Globe size={16} />
+                <a
+                  href={item.site.startsWith("http") ? item.site : `https://${item.site}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.site.replace(/^https?:\/\//, "")}
+                </a>
+              </li>
+            ) : null}
+          </ul>
+        </article>
+      ))}
     </div>
   );
 }
