@@ -1,9 +1,9 @@
 import Image from "next/image";
 import {
   ArrowRight,
+  Bot,
   CircleCheck,
   Receipt,
-  ScanBarcode,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { CountUp } from "@/components/count-up";
@@ -11,11 +11,11 @@ import { SITE, waLink, yearsInMarket } from "@/lib/site";
 import styles from "./hero.module.css";
 
 type Props = {
-  /** Screenshot do produto */
+  /** Tela de atendimento do MCN Connect. */
   screenshot?: string;
 };
 
-export function HomeHero({ screenshot = "/assets/images/erp-tela-vendas.png" }: Props) {
+export function HomeHero({ screenshot = "/assets/images/connect2.png" }: Props) {
   const stats = [
     { value: SITE.foundedYear, label: "No mercado desde", raw: true },
     { value: SITE.clients, prefix: "+", label: "Empresas clientes" },
@@ -82,13 +82,13 @@ export function HomeHero({ screenshot = "/assets/images/erp-tela-vendas.png" }: 
               <span />
               <span />
               <span />
-              <div className={styles.url}>MCN ERP · Sistema de Gestão</div>
+              <div className={styles.url}>MCN Connect · Multiatendimento WhatsApp</div>
             </div>
             <div className={styles.screen}>
               {screenshot ? (
                 <Image
                   src={screenshot}
-                  alt="Tela de vendas do ERP MCN"
+                  alt="MCN Connect: atendimento pelo WhatsApp com conversa, orçamento e link de pagamento"
                   fill
                   priority
                   sizes="(max-width: 1024px) 92vw, 680px"
@@ -104,22 +104,22 @@ export function HomeHero({ screenshot = "/assets/images/erp-tela-vendas.png" }: 
 
           <div className={`${styles.float} ${styles.floatA} glass`}>
             <span className={styles.floatIcon}>
-              <Receipt size={18} />
+              <Bot size={18} />
             </span>
             <div>
-              <strong>NF-e autorizada</strong>
-              <small>SEFAZ · agora mesmo</small>
+              <strong>Atendimento com IA</strong>
+              <small>mais agilidade nas conversas</small>
             </div>
           </div>
 
           <div className={`${styles.float} ${styles.floatB} glass`}>
             <span className={`${styles.floatIcon} ${styles.floatIconCyan}`}>
-              <ScanBarcode size={18} />
+              <Receipt size={18} />
             </span>
             <div>
-              <strong>Estoque sincronizado</strong>
+              <strong>Orçamento enviado</strong>
               <small>
-                <i className={styles.live} /> contagem via app
+                <i className={styles.live} /> na mesma conversa
               </small>
             </div>
           </div>
@@ -129,8 +129,8 @@ export function HomeHero({ screenshot = "/assets/images/erp-tela-vendas.png" }: 
               <FaWhatsapp size={18} />
             </span>
             <div>
-              <strong>Pedido enviado</strong>
-              <small>direto pelo WhatsApp</small>
+              <strong>WhatsApp em equipe</strong>
+              <small>MCN Connect</small>
             </div>
           </div>
         </div>

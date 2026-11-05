@@ -201,14 +201,14 @@
 
 .screen {
   position: relative;
-  aspect-ratio: 1328 / 652;
+  aspect-ratio: 1672 / 941;
   border-radius: 12px;
   overflow: hidden;
   background: #f4f6fa;
 }
 
 .screenImg {
-  object-fit: cover;
+  object-fit: contain;
   object-position: top left;
 }
 
@@ -446,6 +446,7 @@
   }
 
   .visual {
+    width: 100%;
     max-width: 680px;
     margin: 24px auto 0;
   }
@@ -483,6 +484,7 @@
   .floatA {
     left: -2%;
     top: 20%;
+    bottom: auto;
   }
 
   .floatB {
